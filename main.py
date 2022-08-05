@@ -9,7 +9,6 @@ def generate_common_word(letters):
         myWords = f.readlines()
     for word in myWords:
         word = word[:2]
-    print(myWords)
     return letters
 
 
