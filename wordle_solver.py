@@ -1,8 +1,12 @@
 # wordle_solver.py
 
+import json
+
 class WordleSolver:
-    def __init__(self, valid_words_file):
+    def __init__(self, valid_words_file, word_freq_file, letter_freq_file):
         self.words = self.load_words(valid_words_file)
+        self.word_freq = self.load_freq(word_freq_file)
+        self.letter_freq = self.load_freq(letter_freq_file)
         self.possible_words = self.words.copy()
 
     def load_words(self, file):
@@ -10,39 +14,42 @@ class WordleSolver:
             words = f.read().splitlines()
         return words
 
-    def adjust_guess(self, guess):
+    def load_freq(self, file):
+        with open(file, 'r') as f:
+            freq = json.load(f)
+        return freq
+
+    def adjust_guess(self, guessed_word, feedback):
         new_possible_words = []
         for word in self.possible_words:
-            if self.is_possible(word, guess):
+            if self.is_possible(word, guessed_word, feedback):
                 new_possible_words.append(word)
         self.possible_words = new_possible_words
 
-    def is_possible(self, word, guess):
+    def is_possible(self, word, guessed_word, feedback):
         for i in range(5):
-            if guess[i] == 'G' and word[i] != guess[i]:
-                print("G")
+            if feedback[i] == 'G' and word[i] != guessed_word[i]:
                 return False
-            if guess[i] == 'B' and word[i] == guess[i]:
-                print("B")
+            if feedback[i] == 'B' and word[i] == guessed_word[i]:
                 return False
-            if guess[i] == 'Y' and (word[i] == guess[i] or word.count(guess[i]) == 0):
-                print("Y")
+            if feedback[i] == 'Y' and guessed_word[i] == word[i]:
+                return False
+            if feedback[i] == 'Y' and not word.__contains__(guessed_word[i]):
                 return False
         return True
 
     def get_optimal_guess(self):
         if self.possible_words:
-            return self.possible_words[0]
+            print(self.possible_words)
+            optimal_word = max(self.possible_words, key=self.get_word_score)
+            return optimal_word
         else:
             return "No optimal guess could be made."
 
+    def get_word_score(self, word):
+        word_score = self.word_freq.get(word, 0)
+        letter_score = sum(self.letter_freq.get(letter, 0) for letter in word)
+        return word_score + letter_score
+
     def reset(self):
         self.possible_words = self.words.copy()
-
-
-if __name__ == "__main__":
-    solver = WordleSolver('validwords.txt')
-    print(solver.get_optimal_guess())  # Should print the first word in 'validwords.txt'
-    solver.adjust_guess('BBBBB')  # Should remove all words that have a correct letter from 'possible_words'
-    print(
-        solver.get_optimal_guess())  # Should print the first word in 'possible_words' that doesn't contain a correct letter

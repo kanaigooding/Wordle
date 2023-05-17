@@ -1,51 +1,62 @@
 # wordle_gui.py
 
 import tkinter as tk
-
 from wordle_solver import WordleSolver
 
-
-class WordleGUI:
+class WordleGUI(tk.Tk):
     def __init__(self, solver):
+        super().__init__()
+        self.title('Wordle Solver')
+        self.geometry('400x300')
         self.solver = solver
-        self.root = tk.Tk()
-        self.root.title("Wordle Solver")
+        self.guesses = []
+        self.guess_entry_fields = []
+        self.guess_feedback_fields = []
+        self.feedback_colors = {'G': 'green', 'Y': 'yellow', 'B': 'black'}
 
-        self.input_frame = tk.Frame(self.root)
-        self.input_frame.pack()
+        for i in range(5):
+            validate_command = self.register(self.limit_characters)
+            guess_entry = tk.Entry(self, width=2, validate='key', validatecommand=(validate_command, '%P'))
+            guess_entry.bind('<Key>', lambda e, i=i: self.focus_next(i))
+            guess_entry.place(x=100 + i*50, y=100)  # adjust placement
+            self.guess_entry_fields.append(guess_entry)
 
-        self.output_frame = tk.Frame(self.root)
-        self.output_frame.pack()
+        for i in range(5):
+            feedback_field = tk.Button(self, text='B', width=2)
+            feedback_field.place(x=100 + i*50, y=150)  # adjust placement
+            feedback_field.bind('<Button-1>', self.cycle_feedback)
+            self.guess_feedback_fields.append(feedback_field)
 
-        self.entry = tk.Entry(self.input_frame)
-        self.entry.pack()
+        submit_button = tk.Button(self, text='Submit', command=self.submit)
+        submit_button.place(x=175, y=200)  # centered placement
 
-        self.submit_button = tk.Button(self.input_frame, text="Submit Guess", command=self.submit_guess)
-        self.submit_button.pack()
+        result_label = tk.Label(self, text='')
+        result_label.place(x=100, y=250)  # centered placement
+        self.result_label = result_label
 
-        self.reset_button = tk.Button(self.input_frame, text="Reset Game", command=self.reset_game)
-        self.reset_button.pack()
+    def limit_characters(self, input):
+        return len(input) <= 1
 
-        self.label = tk.Label(self.output_frame, text="Enter your guesses to get the next optimal guess.")
-        self.label.pack()
+    def focus_next(self, index):
+        if index < 4:
+            self.guess_entry_fields[index+1].focus()
 
-    def submit_guess(self):
-        guess = self.entry.get().upper()
-        self.solver.adjust_guess(guess)
+    def submit(self):
+        guessed_word = ''.join(entry.get().lower() for entry in self.guess_entry_fields)
+        feedback = [field['text'] for field in self.guess_feedback_fields]
+        self.solver.adjust_guess(guessed_word, feedback)
         optimal_guess = self.solver.get_optimal_guess()
-        self.label.config(text=f"Optimal guess: {optimal_guess}")
-        self.entry.delete(0, 'end')
+        self.result_label['text'] = f'Optimal Guess: {optimal_guess}'
+        self.guesses.append((guessed_word, feedback))
 
-    def reset_game(self):
-        self.solver.reset()
-        self.label.config(text="Enter your guesses to get the next optimal guess.")
-        self.entry.delete(0, 'end')
-
-    def run(self):
-        self.root.mainloop()
-
+    def cycle_feedback(self, event):
+        current_feedback = event.widget['text']
+        feedback_values = list(self.feedback_colors.keys())
+        new_feedback = feedback_values[(feedback_values.index(current_feedback) + 1) % len(feedback_values)]
+        event.widget['text'] = new_feedback
+        event.widget['bg'] = self.feedback_colors[new_feedback]
 
 if __name__ == "__main__":
-    solver = WordleSolver('validwords.txt')
+    solver = WordleSolver('validwords.txt', 'word_freq_map.json', 'letter_freq_map.json')
     gui = WordleGUI(solver)
-    gui.run()
+    gui.mainloop()
