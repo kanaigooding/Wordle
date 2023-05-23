@@ -77,6 +77,6 @@ class WordleGUI(tk.Tk):
 
 
 if __name__ == "__main__":
-    solver = WordleSolver('validwords.txt', 'word_freq_map.json', 'letter_freq_map.json')
+    solver = WordleSolver('frequencyMaps/validwords.txt', 'frequencyMaps/word_freq_map.json', 'frequencyMaps/letter_freq_map.json')
     gui = WordleGUI(solver)
     gui.mainloop()
