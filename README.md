@@ -1,4 +1,55 @@
-# Wordle
-Wordle is a web-based word game created and developed by Welsh software engineer Josh Wardle, and owned and published by The New York Times Company since 2022. Players have six attempts to guess a five-letter word, with feedback given for each guess in the form of colored tiles indicating when letters match or occupy the correct position. The mechanics are nearly identical to the 1955 pen-and-paper game Jotto and the television game show franchise Lingo. Wordle has a single daily solution, with all players attempting to guess the same word.
+# Wordle Solver
 
-Wardle initially created the game for himself and his partner to play, eventually making it public in October 2021. The game gained a large amount of popularity in December 2021 after Wardle added the ability for players to copy their daily results as emoji squares, which were widely shared on Twitter. Many clones and variations of the game were also created, as were versions in languages besides English. The game was purchased by The New York Times Company in January 2022 for an undisclosed seven-figure sum, with plans to keep it free for all players; it was moved to the company's website in February 2022.
+Wordle Solver is a Python-based application that assists in finding the optimal word in the Wordle game, which has become increasingly popular. The solver uses frequency maps for words and letters to suggest the most likely word based on your previous guesses and the game's feedback.
+
+## Features
+
+- User-friendly Graphical User Interface (GUI)
+- Uses word and letter frequency maps to suggest the most probable words
+- Adjusts possible word list based on the feedback of your guesses
+- Easy to use, allowing users to focus more on the game
+
+## Requirements
+
+- Python 3.7 or higher
+- Tkinter library for Python
+- JSON data files for word and letter frequency maps (provided)
+
+## Installation
+
+1. Clone the repository to your local machine:
+
+```bash
+git clone https://github.com/kanaigooding/wordle-solver.git
+```
+
+2. Install the required libraries:
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Run the wordle_gui.py script to start the application:
+
+```bash
+python wordle_gui.py
+```
+
+## Usage
+
+1. Start the application
+2. In the GUI, enter your guessed word
+3. Indicate the feedback from the game by clicking on the buttons below each letter. They will cycle through 'G', 'Y', and 'B' colors.
+4. Submit your guess and feedback by clicking on the 'Submit' button.
+5. The solver will suggest an optimal word, which will be displayed on the GUI.
+6. Repeat the process until you've guessed the correct word.
+
+## Contribute
+
+Your contributions are always welcome! Please create a pull request to contribute to this project.
+
+## License
+
+This project is licensed under [MIT License](LICENSE).
+
+---
