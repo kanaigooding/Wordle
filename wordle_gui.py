@@ -3,7 +3,6 @@
 import tkinter as tk
 from wordle_solver import WordleSolver
 
-
 class WordleGUI(tk.Tk):
     def __init__(self, solver):
         super().__init__()
@@ -20,14 +19,14 @@ class WordleGUI(tk.Tk):
             entry = tk.Entry(self, width=2, validate='key', validatecommand=(validate_command, '%P'))
             entry.config(font=('Helvetica', 24), justify='center', bg='dark grey')
             entry.bind('<Key>', lambda e, i=i: self.focus_next(i))
-            entry.place(x=50 + i * 70, y=100)  # adjust placement
+            entry.place(x=50 + i*70, y=100)  # adjust placement
             self.entries.append(entry)
 
         self.feedback_buttons = []
         for i in range(5):
             button = tk.Button(self, text='B', width=2, height=1, bg='dark grey')
             button.config(font=('Helvetica', 24))
-            button.place(x=50 + i * 70, y=150)  # adjust placement
+            button.place(x=50 + i*70, y=150)  # adjust placement
             button.bind('<Button-1>', self.cycle_feedback)
             self.feedback_buttons.append(button)
 
@@ -43,13 +42,12 @@ class WordleGUI(tk.Tk):
         self.previous_guesses_text = tk.Text(self, height=5, width=20)
         self.previous_guesses_text.place(x=20, y=350)
 
-    @staticmethod
-    def limit_characters(input):
+    def limit_characters(self, input):
         return len(input) <= 1
 
     def focus_next(self, index):
         if index < 4:
-            self.entries[index + 1].focus()
+            self.entries[index+1].focus()
 
     def submit(self):
         guessed_word = ''.join(entry.get().lower() for entry in self.entries)
@@ -75,8 +73,8 @@ class WordleGUI(tk.Tk):
         event.widget['text'] = new_feedback
         event.widget['bg'] = self.feedback_colors[new_feedback]
 
-
 if __name__ == "__main__":
     solver = WordleSolver('frequencyMaps/validwords.txt', 'frequencyMaps/word_freq_map.json', 'frequencyMaps/letter_freq_map.json')
     gui = WordleGUI(solver)
     gui.mainloop()
+
