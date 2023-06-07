@@ -29,7 +29,6 @@ class WordleSolver:
         for word in self.possible_words:
             if self.is_possible(word, guessed_word, feedback):
                 new_possible_words.append(word)
-        print(new_possible_words)
         self.possible_words = new_possible_words
 
     # Check if a word is a possible solution based on the guessed word and feedback
@@ -47,17 +46,33 @@ class WordleSolver:
 
     # Get the optimal guess based on the remaining possible words
     def get_optimal_guess(self):
-        if self.possible_words:
-            optimal_word = max(self.possible_words, key=self.get_word_score)
-            return optimal_word
-        else:
-            return "No optimal guess could be made."
+        if not self.possible_words:
+            return None
 
-    # Get the score of a word based on word frequency and letter frequency
-    def get_word_score(self, word):
-        word_score = self.word_freq.get(word, 0)
-        letter_score = sum(self.letter_freq.get(letter, 0) for letter in word)
-        return word_score + letter_score
+        # pick word with maximum score
+        max_score = -1
+        total_word_score = 0
+        optimal_word = ''
+
+        for word in self.possible_words:
+            total_word_score = total_word_score + self.word_freq.get(word, 0)
+
+        for word in self.possible_words:
+            word_score = self.get_word_score(word, total_word_score)
+            if word_score > max_score:
+                max_score = word_score
+                optimal_word = word
+
+        return optimal_word
+
+    def get_word_score(self, word, total_word_score):
+        word_score = self.word_freq.get(word, 0) / total_word_score
+        print(word_score)
+        letter_score = 0
+        for letter in set(word):
+            letter_score = letter_score + self.letter_freq.get(letter.lower(), 1)
+        print(letter_score * word_score)
+        return letter_score * word_score
 
     # Reset the solver to the initial state
     def reset(self):
