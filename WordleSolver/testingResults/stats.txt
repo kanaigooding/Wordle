@@ -1,0 +1,24 @@
+Iteration: letter_score * word_score
+Time: 2023-06-10 12:59:48
+Average attempts: 4.990195321547132
+Minimum attempts: 1
+Maximum attempts: 14
+Median attempts: 5.0
+Standard Deviation of attempts: 1.587115058444757
+============================================================================
+Iteration: letter_score
+Time: 2023-06-10 13:04:11
+Average attempts: 4.9302864201343315
+Minimum attempts: 1
+Maximum attempts: 16
+Median attempts: 5.0
+Standard Deviation of attempts: 1.651858967383839
+============================================================================
+Iteration: 
+Time: 2023-06-10 13:07:06
+Average attempts: 5.0224658380298
+Minimum attempts: 1
+Maximum attempts: 14
+Median attempts: 5.0
+Standard Deviation of attempts: 1.5994880299443002
+============================================================================

@@ -69,7 +69,7 @@ class QuordleSolver:
         letter_score = 0
         for letter in set(word):
             letter_score += self.letter_freq.get(letter.lower(), 1)
-        return letter_score * word_score
+        return letter_score
 
     def reset(self):
         self.possible_words = [self.words.copy() for _ in range(4)]

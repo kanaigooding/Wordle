@@ -1,5 +1,5 @@
 import tkinter as tk
-from wordle_solver import WordleSolver
+from WordleSolver.wordle_solver import WordleSolver
 
 class QuordleGUI(tk.Tk):
     def __init__(self):
