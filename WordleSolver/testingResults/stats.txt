@@ -14,7 +14,7 @@ Maximum attempts: 16
 Median attempts: 5.0
 Standard Deviation of attempts: 1.651858967383839
 ============================================================================
-Iteration: 
+Iteration: word_score
 Time: 2023-06-10 13:07:06
 Average attempts: 5.0224658380298
 Minimum attempts: 1
