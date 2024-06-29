@@ -1,55 +1,88 @@
-# Wordle Solver
+# Wordle & Quordle Solver
 
-Wordle Solver is a Python-based application that assists in finding the optimal word in the Wordle game, which has become increasingly popular. The solver uses frequency maps for words and letters to suggest the most likely word based on your previous guesses and the game's feedback.
+This repository contains a Wordle and Quordle solver implemented in Python. It includes a graphical user interface (GUI) for both games, allowing users to interactively solve Wordle and Quordle puzzles.
+
+## Table of Contents
+- Introduction
+- Features
+- Installation
+- Usage
+- Directory Structure
+- Contributing
+- License
+
+## Introduction
+
+The Wordle and Quordle solvers use frequency analysis of words and letters to optimize guesses and provide feedback to help users find the correct words. The GUI is built using `tkinter`, providing an easy-to-use interface for solving the puzzles interactively.
 
 ## Features
 
-- User-friendly Graphical User Interface (GUI)
-- Uses word and letter frequency maps to suggest the most probable words
-- Adjusts possible word list based on the feedback of your guesses
-- Easy to use, allowing users to focus more on the game
-
-## Requirements
-
-- Python 3.7 or higher
-- Tkinter library for Python
-- JSON data files for word and letter frequency maps (provided)
+- Wordle Solver GUI: A GUI to solve Wordle puzzles.
+- Quordle Solver GUI: A GUI to solve Quordle puzzles.
+- Frequency Analysis: Uses word and letter frequency maps to optimize guesses.
+- Interactive Feedback: Provides feedback on guesses to help narrow down possible solutions.
 
 ## Installation
 
-1. Clone the repository to your local machine:
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/your-username/wordle-quordle-solver.git
+    cd wordle-quordle-solver
+    ```
 
-```bash
-git clone https://github.com/kanaigooding/wordle-solver.git
-```
-
-2. Install the required libraries:
-
-```bash
-pip install -r requirements.txt
-```
-
-3. Run the wordle_gui.py script to start the application:
-
-```bash
-python wordle_gui.py
-```
+2. Install the required dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 ## Usage
 
-1. Start the application
-2. In the GUI, enter your guessed word
-3. Indicate the feedback from the game by clicking on the buttons below each letter. They will cycle through 'G', 'Y', and 'B' colors.
-4. Submit your guess and feedback by clicking on the 'Submit' button.
-5. The solver will suggest an optimal word, which will be displayed on the GUI.
-6. Repeat the process until you've guessed the correct word.
+### Wordle Solver
 
-## Contribute
+To run the Wordle Solver GUI, use the following command:
+```bash
+python src/gui/wordle_gui.py
+```
 
-Your contributions are always welcome! Please create a pull request to contribute to this project.
+### Quordle Solver
 
-## License
+To run the Quordle Solver GUI, use the following command:
+```bash
+python src/gui/quordle_gui.py
+```
 
-This project is licensed under [MIT License](LICENSE).
+## Directory Structure
 
----
+```
+wordle-quordle-solver/
+├── frequencyMaps/
+│   ├── validwords.txt
+│   ├── word_freq_map.json
+│   ├── letter_freq_map.json
+│   ├── regularized_word_freq_map.json
+│   ├── regularized_letter_freq_map.json
+├── src/
+│   ├── gui/
+│   │   ├── quordle_gui.py
+│   │   ├── wordle_gui.py
+│   ├── solver/
+│   │   ├── wordle_solver.py
+│   │   ├── __init__.py
+├── tests/
+│   ├── wordle_solver_test.py
+│   ├── quordle_solver_test.py
+├── README.md
+├── requirements.txt
+├── .gitignore
+├── setup.py
+```
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or new features.
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature-branch`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature-branch`)
+5. Open a pull request
